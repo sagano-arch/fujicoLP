@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式会社フジコー | 名古屋市の直結切替工事</title>
+    
+    <!-- Tailwind CSS (デザイン用) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & Babel (プログラム動作等のためのライブラリ) -->
+    <script type="importmap">
+        {
+            "imports": {
+                "react": "https://esm.sh/react@18.2.0",
+                "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+                "lucide-react": "https://esm.sh/lucide-react@0.263.1"
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        /* スムーズスクロール */
+        html { scroll-behavior: smooth; }
+        body { font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <div id="root"></div>
+
+    <!-- アプリケーションのロジック -->
+    <script type="text/babel" data-type="module">
+        import React, { useState, useEffect } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { 
+            Calculator, CheckCircle, ArrowRight, Phone, Mail, Building2, 
+            Droplets, Banknote, ShieldCheck, ChevronDown, ChevronUp, 
+            BarChart3, Info, MessageCircle, ExternalLink, RefreshCw 
+        } from 'lucide-react';
+
+        const App = () => {
+            return (
+                <div className="min-h-screen relative">
+                    <Header />
+                    <Hero />
+                    <EstimateCalculator />
+                    <Features />
+                    <ProcessFlow />
+                    <FAQ />
+                    <Contact />
+                    <Footer />
+                </div>
+            );
+        };
+
+        // --- Components ---
+
+        const Header = () => (
+            <header className="sticky top-0 z-40 bg-white shadow-md">
+                <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+                    <div className="flex flex-col">
+                        <p className="text-xs font-bold leading-none mb-1" style={{ color: '#774600' }}>
+                            名古屋市の直結切替工事なら
+                        </p>
+                        <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xl font-bold tracking-tight text-slate-900">
+                                株式会社フジコー
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-1 text-[10px] text-slate-600 font-bold">
+                            <CheckCircle className="h-3 w-3 text-green-600" />
+                            名古屋市上下水道局指定工事店
+                        </div>
+                    </div>
+                    <nav className="hidden lg:flex gap-6 text-sm font-medium items-center">
+                        <a href="#calculator" className="hover:text-blue-600 transition-colors">概算見積</a>
+                        <a href="#features" className="hover:text-blue-600 transition-colors">直結化のメリット</a>
+                        <a href="#flow" className="hover:text-blue-600 transition-colors">工事の流れ</a>
+                        {/* 公式HPへのリンク追加 */}
+                        <a href="https://www.e-fujico.com/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-slate-500 hover:text-blue-600 transition-colors border-l pl-6">
+                            施工事例・公式HP <ExternalLink className="h-3 w-3" />
+                        </a>
+                    </nav>
+                    <a href="#contact" className="hidden sm:inline-flex bg-blue-600 text-white px-5 py-2 rounded-full font-bold hover:bg-blue-700 transition-colors shadow-lg hover:shadow-xl text-sm">
+                        無料現地調査を依頼
+                    </a>
+                </div>
+            </header>
+        );
+
+        const Hero = () => {
+            // ★Canvasでのプレビュー用に、Web上のサンプル画像を設定しています。
+            // 本番公開時には、ここをお手持ちの画像ファイル名（例: "url('./index_pr_gaikan.png')") に書き換えてください。
+            const bgImage = "url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1920&auto=format&fit=crop')";
+
+            return (
+                <section className="relative py-20 lg:py-32 overflow-hidden bg-slate-900">
+                    {/* 背景画像設定 */}
+                    <div 
+                        className="absolute inset-0 bg-cover bg-center"
+                        style={{ 
+                            backgroundImage: bgImage,
+                            backgroundPosition: 'center center' // 画像の中央を表示
+                        }}
+                    ></div>
+                    
+                    {/* オーバーレイ（文字を読みやすくするための暗いフィルター） */}
+                    {/* bg-slate-900/40 (不透明度40%) */}
+                    <div className="absolute inset-0 bg-slate-900/40"></div>
+
+                    <div className="container mx-auto px-4 relative z-10 text-center">
+                        
+                        <div className="inline-block bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-1.5 rounded-full text-sm font-medium mb-6 text-white">
+                            マンション・ビルオーナー様・管理組合様へ
+                        </div>
+
+                        <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-white drop-shadow-md">
+                            受水槽をなくして、<br />
+                            <span className="text-blue-400">新鮮な水</span>と<span className="text-blue-400">コスト削減</span>を。
+                        </h1>
+                        <div className="text-lg md:text-xl max-w-2xl mx-auto mb-10 text-slate-100 drop-shadow-sm">
+                            <p>
+                                受水槽方式から直結給水方式への切り替えで、衛生面の向上とメンテナンスコストの削減を実現します。まずはWebで概算費用をご確認ください。
+                            </p>
+                        </div>
+                        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+                            <a href="#calculator" className="flex items-center justify-center gap-2 bg-white text-blue-900 px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-50 transition-all shadow-lg transform hover:-translate-y-1">
+                                <Calculator className="h-5 w-5" />
+                                今すぐ概算見積もり
+                            </a>
+                            <a href="#features" className="flex items-center justify-center gap-2 border border-white/40 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/10 hover:border-white transition-all backdrop-blur-sm">
+                                詳しく見る
+                            </a>
+                        </div>
+
+                        {/* 公式HPへの目立つリンクボタン */}
+                        <div className="text-center">
+                            <p className="text-xs mb-2 text-slate-300 opacity-80">＼ 豊富な実績はこちらから ／</p>
+                            <a href="https://www.e-fujico.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-slate-200 hover:text-white border-b border-white/40 hover:border-white transition-colors pb-0.5">
+                                株式会社フジコー 公式ホームページで施工事例を見る <ExternalLink className="h-4 w-4" />
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Features = () => {
+            const features = [
+                {
+                    icon: <ShieldCheck className="h-10 w-10 text-blue-500" />,
+                    title: "衛生的で美味しい水",
+                    desc: "受水槽に溜めずに水道管から直接蛇口へ水を届けるため、いつでも新鮮で安全な水を利用できます。"
+                },
+                {
+                    icon: <Banknote className="h-10 w-10 text-blue-500" />,
+                    title: "維持管理コスト削減",
+                    desc: "受水槽の定期清掃、水質検査、ポンプのメンテナンス費用が不要になり、長期的なコストダウンになります。"
+                },
+                {
+                    icon: <Building2 className="h-10 w-10 text-blue-500" />,
+                    title: "空きスペースの有効活用",
+                    desc: "受水槽を撤去した跡地を、駐輪場や倉庫、駐車場などとして有効活用することができます。"
+                }
+            ];
+
+            return (
+                <section id="features" className="py-20 bg-white">
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+                                直結給水切替のメリット
+                            </h2>
+                            <p className="text-slate-600">
+                                今の受水槽方式にはない、多くの利点があります。
+                            </p>
+                        </div>
+                        <div className="grid md:grid-cols-3 gap-8">
+                            {features.map((f, i) => (
+                                <div key={i} className="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-lg transition-shadow">
+                                    <div className="bg-white p-4 rounded-xl inline-block shadow-sm mb-6">{f.icon}</div>
+                                    <h3 className="text-xl font-bold mb-3 text-slate-900">
+                                        {f.title}
+                                    </h3>
+                                    <p className="text-slate-600 leading-relaxed">
+                                        {f.desc}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // --- Estimate Logic & Comparison Table ---
+
+        // 基本工事費テーブル (口径: 金額)
+        const BASIC_CONSTRUCTION_COSTS = {
+            20: 132000, 
+            25: 308000,
+            40: 792000,
+            50: 1320000,
+            75: 2750000, 
+            100: 0 
+        };
+
+        // 設計審査手数料テーブル (口径: 金額) 
+        const DESIGN_CHECK_FEES = {
+            20: 5000, 
+            25: 7000, 
+            40: 14500,
+            50: 14500, 
+            75: 36000, 
+            100: 50000 
+        };
+
+        // 計算ロジック
+        const calculateEstimateValue = (
+            floors, 
+            units, 
+            hasTankRemoval, 
+            currentPipeSize, 
+            tankCapacity
+        ) => {
+            // 1. 工事費用の計算
+            
+            // 基礎工事費 (階数によって変動)
+            let baseConstructionCost = 0;
+            if (floors <= 4) {
+                baseConstructionCost = 2000000;
+            } else if (floors <= 6) {
+                baseConstructionCost = 3000000;
+            } else if (floors <= 8) {
+                baseConstructionCost = 4000000;
+            } else if (floors <= 10) {
+                baseConstructionCost = 5000000;
+            } else {
+                baseConstructionCost = 7000000; // 11階以上
+            }
+
+            const unitCost = 25000 * units; // メーター周りバイパス工事等 × 戸数
+            
+            // ポンプ費用 (4階以上は増圧ポンプ)
+            let pumpCost = 0;
+            const isBooster = floors > 3;
+            if (isBooster) {
+                pumpCost = 1200000; // 増圧ポンプ本体 + 設置工賃
+            }
+
+            // 撤去費用
+            let removalCost = 0;
+            if (hasTankRemoval) {
+                removalCost = 150000 + (units * 5000); 
+            }
+
+            // 設計・申請費 (基本設計費)
+            const designFee = 100000;
+            
+            const totalConstructionCost = baseConstructionCost + unitCost + pumpCost + removalCost + designFee;
+
+            // 2. 口径判定と基本工事費（加入金差額）
+            let newPipeSize = 40;
+            if (units >= 44) {
+                newPipeSize = 75;
+            } else if (units >= 23) {
+                newPipeSize = 50;
+            }
+
+            const currentBasicCost = BASIC_CONSTRUCTION_COSTS[currentPipeSize] || 0;
+            const newBasicCost = BASIC_CONSTRUCTION_COSTS[newPipeSize] || 0;
+            
+            // 差額計算 (増径の場合のみ支払う)
+            let differenceCost = 0;
+            const isPipeSizeIncreased = newPipeSize > currentPipeSize; // 増径フラグ
+
+            if (isPipeSizeIncreased && newBasicCost > currentBasicCost) {
+                differenceCost = newBasicCost - currentBasicCost;
+            }
+
+            // 3. 直接工事費（道路工事費）の計算
+            // 条件: 口径が変わる場合のみ発生。150万円。
+            // ただし、受水槽容量が10トン以下の場合は無料。
+            let roadConstructionCost = 0;
+            let roadCostReason = "";
+
+            if (isPipeSizeIncreased) {
+                if (tankCapacity <= 10) {
+                    roadConstructionCost = 0;
+                    roadCostReason = "10t以下につき無料";
+                } else {
+                    roadConstructionCost = 1500000;
+                    roadCostReason = "増径・10t超のため発生";
+                }
+            } else {
+                roadCostReason = "口径変更なしのため不要";
+            }
+
+            // 4. 設計審査手数料の計算 (新口径に基づく)
+            const designCheckFee = DESIGN_CHECK_FEES[newPipeSize] || 0;
+
+            return {
+                total: totalConstructionCost + differenceCost + designCheckFee + roadConstructionCost,
+                constructionCost: totalConstructionCost,
+                baseConstructionCost, // 内訳表示用に返す
+                differenceCost,
+                designCheckFee,
+                roadConstructionCost,
+                roadCostReason,
+                newPipeSize,
+                currentPipeSize,
+                tankCapacity // ★追加: 計算時の容量を保存
+            };
+        };
+
+
+        const EstimateCalculator = () => {
+            // 初期値を 4階, 10戸, 撤去あり, 現在口径40mm, 受水槽5t に設定
+            const [floors, setFloors] = useState(4);
+            const [units, setUnits] = useState(10);
+            const [pumpType, setPumpType] = useState('booster');
+            const [hasTankRemoval, setHasTankRemoval] = useState(true);
+            const [currentPipeSize, setCurrentPipeSize] = useState(40);
+            const [tankCapacity, setTankCapacity] = useState(5); // 受水槽容量(トン)
+            
+            // 初期状態で計算結果を持たせる
+            const [result, setResult] = useState(calculateEstimateValue(4, 10, true, 40, 5));
+
+            useEffect(() => {
+                if (floors > 3) {
+                    setPumpType('booster');
+                } else {
+                    setPumpType('direct');
+                }
+            }, [floors]);
+
+            const handleCalculate = () => {
+                const res = calculateEstimateValue(floors, units, hasTankRemoval, currentPipeSize, tankCapacity);
+                setResult(res);
+            };
+
+            const formatCurrency = (num) => {
+                return new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(num);
+            };
+
+            return (
+                <section id="calculator" className="py-20 bg-slate-100">
+                    <div className="container mx-auto px-4">
+                        <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden mb-12">
+                            <div className="bg-blue-600 p-6 text-white text-center">
+                                <h2 className="text-2xl md:text-3xl font-bold flex items-center justify-center gap-3">
+                                    <Calculator className="h-8 w-8" />
+                                    直結切替工事 概算シミュレーター
+                                </h2>
+                                <p className="mt-2 text-blue-100">
+                                    建物の情報を入力するだけで、工事費用と納付金の目安がわかります。
+                                </p>
+                            </div>
+
+                            <div className="p-8 md:p-12">
+                                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                                    {/* Input Section */}
+                                    <div className="space-y-6">
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-2">建物の階数</label>
+                                            <div className="flex items-center gap-4">
+                                                <input 
+                                                    type="range" min="1" max="15" step="1" 
+                                                    value={floors} onChange={(e) => setFloors(Number(e.target.value))}
+                                                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                                                />
+                                                <span className="text-xl font-bold text-blue-900 w-16 text-right">{floors}階</span>
+                                            </div>
+                                            <p className="text-xs text-slate-500 mt-1">※3階までは直圧、4階以上は増圧ポンプ方式と仮定します</p>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-2">総戸数</label>
+                                            <div className="relative flex items-center gap-4">
+                                                <div className="relative w-full">
+                                                    <select 
+                                                        value={units} 
+                                                        onChange={(e) => setUnits(Number(e.target.value))}
+                                                        className="w-full border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none appearance-none bg-white font-medium text-sm"
+                                                    >
+                                                        {Array.from({ length: 100 }, (_, i) => i + 1).map(num => (
+                                                            <option key={num} value={num}>{num}</option>
+                                                        ))}
+                                                    </select>
+                                                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-slate-500">
+                                                        <ChevronDown className="h-4 w-4" />
+                                                    </div>
+                                                </div>
+                                                <span className="text-xl font-bold text-blue-900 w-16 text-right">戸</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-sm font-bold text-slate-700 mb-2">現在の引込口径</label>
+                                                <div className="relative">
+                                                    <select 
+                                                        value={currentPipeSize} 
+                                                        onChange={(e) => setCurrentPipeSize(Number(e.target.value))}
+                                                        className="w-full border border-slate-300 rounded-lg px-3 py-3 focus:ring-2 focus:ring-blue-500 outline-none appearance-none bg-white font-medium text-sm"
+                                                    >
+                                                        <option value={20}>20mm</option>
+                                                        <option value={25}>25mm</option>
+                                                        <option value={40}>40mm</option>
+                                                        <option value={50}>50mm</option>
+                                                        <option value={75}>75mm</option>
+                                                    </select>
+                                                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-slate-500">
+                                                        <ChevronDown className="h-4 w-4" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label className="block text-sm font-bold text-slate-700 mb-2">現在の受水槽容量</label>
+                                                <div className="relative">
+                                                    <select 
+                                                        value={tankCapacity} 
+                                                        onChange={(e) => setTankCapacity(Number(e.target.value))}
+                                                        className="w-full border border-slate-300 rounded-lg px-3 py-3 focus:ring-2 focus:ring-blue-500 outline-none appearance-none bg-white font-medium text-sm"
+                                                    >
+                                                        {Array.from({ length: 26 }, (_, i) => i + 5).map(num => (
+                                                            <option key={num} value={num}>{num} トン</option>
+                                                        ))}
+                                                    </select>
+                                                    <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none text-slate-500">
+                                                        <ChevronDown className="h-4 w-4" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p className="text-xs text-slate-500">
+                                            ※受水槽容量が10トン以下の場合、道路工事費が免除される場合があります。
+                                        </p>
+
+                                        <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-lg border border-slate-100">
+                                            <input 
+                                                type="checkbox" id="tankRemoval" 
+                                                checked={hasTankRemoval} onChange={(e) => setHasTankRemoval(e.target.checked)}
+                                                className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+                                            />
+                                            <label htmlFor="tankRemoval" className="text-slate-700 font-medium cursor-pointer">
+                                                既存受水槽の撤去を含む
+                                            </label>
+                                        </div>
+
+                                        <button 
+                                            onClick={handleCalculate}
+                                            className="w-full bg-blue-600 text-white font-bold text-lg py-4 rounded-xl shadow-lg hover:bg-blue-700 hover:shadow-xl transition-all active:scale-95"
+                                        >
+                                            概算見積を再計算する
+                                        </button>
+                                    </div>
+
+                                    {/* Result Section */}
+                                    <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200 flex flex-col justify-center">
+                                        <div className="animate-in fade-in zoom-in duration-300">
+                                            <h3 className="text-slate-500 font-medium mb-2 text-center">概算総額（工事費＋納付金）</h3>
+                                            <div className="text-4xl md:text-5xl font-extrabold text-blue-900 text-center mb-6 tracking-tight">
+                                                {formatCurrency(result.total)}
+                                            </div>
+                                            
+                                            {/* 詳細内訳表示 */}
+                                            <div className="bg-white rounded-lg p-4 border border-slate-200 mb-6 space-y-3">
+                                                <div className="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
+                                                    <span className="font-bold text-slate-700">直結化工事費用</span>
+                                                    <span className="font-bold text-slate-800">{formatCurrency(result.constructionCost)}</span>
+                                                </div>
+                                                
+                                                <div className="text-sm space-y-2">
+                                                    {/* 基礎工事費の内訳を参考表示 */}
+                                                    <div className="flex justify-between items-center text-xs text-slate-500 pl-2">
+                                                        <span>(内 基礎工事費: {floors}階相当)</span>
+                                                        <span>{formatCurrency(result.baseConstructionCost)}</span>
+                                                    </div>
+
+                                                    <div className="flex justify-between items-center mt-2">
+                                                        <span className="font-bold text-slate-700 flex items-center gap-1">
+                                                            基本工事費 (施設整備費)
+                                                            <div className="group relative">
+                                                                <Info className="h-4 w-4 text-slate-400 cursor-help" />
+                                                                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 bg-slate-800 text-white text-xs p-2 rounded shadow-lg hidden group-hover:block z-10">
+                                                                    口径を大きくする場合、水道局へ納める差額金が必要です。
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                        <span className={`font-bold ${result.differenceCost > 0 ? "text-red-600" : "text-slate-800"}`}>
+                                                            {result.differenceCost > 0 ? `+ ${formatCurrency(result.differenceCost)}` : "0円"}
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="mt-2">
+                                                        <div className="flex justify-between items-center">
+                                                            <span className="font-bold text-slate-700 flex items-center gap-1">
+                                                                直接工事費 (道路工事費)
+                                                                <div className="group relative">
+                                                                    <Info className="h-4 w-4 text-slate-400 cursor-help" />
+                                                                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-56 bg-slate-800 text-white text-xs p-2 rounded shadow-lg hidden group-hover:block z-10">
+                                                                        増径時に発生しますが、受水槽容量が10t以下の場合は無料になります。
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+                                                            <div className="text-right">
+                                                                <span className={`font-bold ${result.roadConstructionCost > 0 ? "text-red-600" : "text-slate-800"}`}>
+                                                                    {result.roadConstructionCost > 0 ? `+ ${formatCurrency(result.roadConstructionCost)}` : "0円"}
+                                                                </span>
+                                                                {result.roadCostReason && (
+                                                                    <div className="text-[10px] text-slate-500 font-medium">({result.roadCostReason})</div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                        <div className="text-[10px] text-slate-500 mt-1 pl-1">
+                                                            ※物件の前面道路の状況により大きく変動する可能性があります
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="flex justify-between items-center mt-2">
+                                                        <span className="font-bold text-slate-700 flex items-center gap-1">
+                                                            設計審査手数料
+                                                        </span>
+                                                        <span className="font-bold text-slate-800">
+                                                            {formatCurrency(result.designCheckFee)}
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="text-xs text-slate-500 pl-2 border-l-2 border-slate-200 ml-1 mt-2">
+                                                        <div>判定: {units}戸 → <span className="font-bold">必要口径 {result.newPipeSize}mm</span></div>
+                                                        <div>現在: {currentPipeSize}mm → {result.newPipeSize}mm 
+                                                            {result.newPipeSize > currentPipeSize ? " (増径)" : " (変更なし/減径)"}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-3 text-sm text-slate-600 border-t border-slate-200 pt-4 mb-6">
+                                                <div className="flex justify-between">
+                                                    <span>方式判定:</span>
+                                                    <span className="font-bold text-slate-800">
+                                                        {floors > 3 ? '増圧給水方式（ポンプ有）' : '直圧給水方式（ポンプ無）'}
+                                                    </span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span>受水槽撤去:</span>
+                                                    <span className="font-bold text-slate-800">{hasTankRemoval ? 'あり' : 'なし'}</span>
+                                                </div>
+                                            </div>
+
+                                            <div className="bg-yellow-50 text-yellow-800 text-xs p-3 rounded border border-yellow-100 mb-6">
+                                                ※この金額は概算シミュレーションです。正確な見積もりには現地調査が必要です。
+                                            </div>
+
+                                            <a href="#contact" className="block w-full text-center border-2 border-blue-600 text-blue-600 font-bold py-3 rounded-lg hover:bg-blue-600 hover:text-white transition-colors">
+                                                無料見積もり/相談を依頼する
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* コスト比較表コンポーネント */}
+                        <ComparisonTable 
+                            floors={floors} 
+                            units={units} 
+                            pumpType={pumpType} 
+                            initialCost={result.total} 
+                            tankCapacity={result.tankCapacity} // ★修正: 入力中のstateではなく、計算確定後のresult.tankCapacityを渡す
+                        />
+                    </div>
+                </section>
+            );
+        };
+
+        const ComparisonTable = ({ floors, units, pumpType, initialCost, tankCapacity }) => { 
+            const scale = Math.max(0.5, units / 60);
+
+            // 受水槽清掃費の計算ロジック
+            // 5トン: 48,000円, 1トン増加ごとに +2,000円
+            const baseCapacity = 5;
+            const baseCleaningCost = 48000;
+            const cleaningCostPerTon = 2000;
+            
+            // tankCapacityがundefinedの場合はデフォルト5を使うなどの安全策
+            const safeCapacity = tankCapacity || 5;
+            const calcCapacity = Math.max(baseCapacity, safeCapacity);
+            
+            // 年間清掃費 (円)
+            const tankCleaningYearlyRaw = baseCleaningCost + (calcCapacity - baseCapacity) * cleaningCostPerTon;
+            // 年間清掃費 (万円)
+            const tankCleaningYearly = tankCleaningYearlyRaw / 10000;
+            
+            // 40年分
+            const tankCleaningTotal = tankCleaningYearly * 40;
+
+            const tankPumpMaintYearly = 12 * scale;
+            const tankPumpMaintTotal = tankPumpMaintYearly * 40;
+
+            const tankPumpReplaceCost = 130 * scale;
+            const tankPumpReplaceCount = 3;
+            const tankPumpReplaceTotal = tankPumpReplaceCost * tankPumpReplaceCount;
+
+            const tankElecYearly = 20 * scale;
+            const tankElecTotal = tankElecYearly * 40;
+
+            const tankRenewalCost = 1200 * scale;
+            const tankRenewalCount = 1;
+            const tankRenewalTotal = tankRenewalCost * tankRenewalCount;
+
+            const tankTotalCost = tankCleaningTotal + tankPumpMaintTotal + tankPumpReplaceTotal + tankElecTotal + tankRenewalTotal;
+
+            const isDirect = pumpType === 'direct';
+
+            const newCleaningTotal = 0;
+
+            const newPumpMaintYearly = isDirect ? 0 : 12 * scale;
+            const newPumpMaintTotal = newPumpMaintYearly * 40;
+
+            const newPumpReplaceCost = isDirect ? 0 : 150 * scale;
+            const newPumpReplaceCount = isDirect ? 0 : 3;
+            const newPumpReplaceTotal = newPumpReplaceCost * newPumpReplaceCount;
+
+            const newElecYearly = isDirect ? 0 : 15 * scale;
+            const newElecTotal = newElecYearly * 40;
+
+            const newRenewalTotal = 0;
+
+            const constructionCostManYen = initialCost / 10000;
+
+            const newTotalCost = newCleaningTotal + newPumpMaintTotal + newPumpReplaceTotal + newElecTotal + newRenewalTotal + constructionCostManYen;
+
+            const savings = tankTotalCost - newTotalCost;
+
+            return (
+                <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden animate-in slide-in-from-bottom-8 duration-500">
+                    <div className="bg-slate-800 p-6 text-white">
+                        <h2 className="text-xl md:text-2xl font-bold flex items-center gap-3">
+                            <BarChart3 className="h-6 w-6 text-blue-400" />
+                            今後40年間の維持費シミュレーション
+                        </h2>
+                        <p className="text-slate-300 text-sm mt-1">
+                            現状の受水槽方式を維持した場合と、直結給水に切り替えた場合のコスト比較
+                        </p>
+                    </div>
+
+                    <div className="p-6 md:p-8">
+                        <div className="flex flex-col md:flex-row gap-8 items-center justify-center mb-10">
+                            <div className="w-full md:w-1/3 text-center">
+                                <div className="text-sm font-bold text-slate-500 mb-2">受水槽を維持した場合</div>
+                                <div className="h-48 bg-slate-100 rounded-t-xl relative flex items-end justify-center group mx-auto max-w-[160px]">
+                                    <div className="w-full bg-slate-400 rounded-t-xl relative transition-all duration-1000" style={{ height: '100%' }}>
+                                        <div className="absolute top-2 left-0 right-0 text-white font-bold text-lg drop-shadow-md">
+                                            {Math.round(tankTotalCost).toLocaleString()}万円
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="bg-slate-200 p-2 rounded-b-xl font-bold text-slate-700 max-w-[160px] mx-auto">コスト 高</div>
+                            </div>
+
+                            <div className="hidden md:block">
+                                <ArrowRight className="h-10 w-10 text-slate-300" />
+                            </div>
+
+                            <div className="w-full md:w-1/3 text-center">
+                                <div className="text-sm font-bold text-blue-600 mb-2">直結給水に変更した場合</div>
+                                <div className="h-48 bg-blue-50 rounded-t-xl relative flex items-end justify-center mx-auto max-w-[160px]">
+                                    <div className="w-full bg-blue-600 rounded-t-xl relative transition-all duration-1000 flex flex-col justify-start pt-2" style={{ height: `${(newTotalCost / tankTotalCost) * 100}%` }}>
+                                        <div className="text-white font-bold text-lg drop-shadow-md">
+                                            {Math.round(newTotalCost).toLocaleString()}万円
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="bg-blue-100 p-2 rounded-b-xl font-bold text-blue-800 max-w-[160px] mx-auto">
+                                    {Math.round(savings).toLocaleString()}万円 お得！
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm text-left border-collapse">
+                                <thead>
+                                    <tr className="bg-slate-100 text-slate-700">
+                                        <th className="p-3 border border-slate-200">項目 (40年間)</th>
+                                        <th className="p-3 border border-slate-200 text-center w-32">受水槽方式</th>
+                                        <th className="p-3 border border-slate-200 text-center w-32 bg-blue-50 text-blue-900">直結給水方式</th>
+                                        <th className="p-3 border border-slate-200 text-xs hidden sm:table-cell">備考</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td className="p-3 border border-slate-200 font-bold">受水槽清掃・水質検査</td>
+                                        <td className="p-3 border border-slate-200 text-right">{Math.round(tankCleaningTotal)}万円</td>
+                                        <td className="p-3 border border-slate-200 text-right bg-blue-50 font-bold text-blue-700">0万円</td>
+                                        <td className="p-3 border border-slate-200 text-xs text-slate-500 hidden sm:table-cell">受水槽がなくなるため不要</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-3 border border-slate-200 font-bold">ポンプ保守・点検</td>
+                                        <td className="p-3 border border-slate-200 text-right">{Math.round(tankPumpMaintTotal)}万円</td>
+                                        <td className="p-3 border border-slate-200 text-right bg-blue-50">{Math.round(newPumpMaintTotal)}万円</td>
+                                        <td className="p-3 border border-slate-200 text-xs text-slate-500 hidden sm:table-cell">
+                                            {isDirect ? "直圧方式のためポンプ不要" : "増圧ポンプの点検が必要"}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-3 border border-slate-200 font-bold">ポンプ交換費用 (3回)</td>
+                                        <td className="p-3 border border-slate-200 text-right">{Math.round(tankPumpReplaceTotal)}万円</td>
+                                        <td className="p-3 border border-slate-200 text-right bg-blue-50">{Math.round(newPumpReplaceTotal)}万円</td>
+                                        <td className="p-3 border border-slate-200 text-xs text-slate-500 hidden sm:table-cell">
+                                            {isDirect ? "交換不要" : "約13年に1回交換と想定"}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-3 border border-slate-200 font-bold">電気代</td>
+                                        <td className="p-3 border border-slate-200 text-right">{Math.round(tankElecTotal)}万円</td>
+                                        <td className="p-3 border border-slate-200 text-right bg-blue-50">{Math.round(newElecTotal)}万円</td>
+                                        <td className="p-3 border border-slate-200 text-xs text-slate-500 hidden sm:table-cell">
+                                            {isDirect ? "電気代ゼロ" : "受水槽方式より省エネ"}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-3 border border-slate-200 font-bold text-red-600">受水槽の更新費用</td>
+                                        <td className="p-3 border border-slate-200 text-right font-bold text-red-600">{Math.round(tankRenewalTotal)}万円</td>
+                                        <td className="p-3 border border-slate-200 text-right bg-blue-50 font-bold text-blue-700">0万円</td>
+                                        <td className="p-3 border border-slate-200 text-xs text-slate-500 hidden sm:table-cell">将来発生する高額な更新費が不要</td>
+                                    </tr>
+                                    <tr className="bg-yellow-50">
+                                        <td className="p-3 border border-yellow-100 font-bold text-yellow-800">直結化工事費用＋納付金 (初期)</td>
+                                        <td className="p-3 border border-yellow-100 text-right text-slate-400">-</td>
+                                        <td className="p-3 border border-yellow-100 text-right font-bold text-blue-900">{Math.round(constructionCostManYen)}万円</td>
+                                        <td className="p-3 border border-yellow-100 text-xs text-yellow-700 hidden sm:table-cell">今回のシミュレーション結果</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr className="bg-slate-800 text-white">
+                                        <td className="p-4 border border-slate-700 font-bold">40年間合計コスト</td>
+                                        <td className="p-4 border border-slate-700 text-right font-bold text-lg">{Math.round(tankTotalCost)}万円</td>
+                                        <td className="p-4 border border-slate-700 text-right font-bold text-lg bg-blue-600">{Math.round(newTotalCost)}万円</td>
+                                        <td className="p-4 border border-slate-700 text-xs hidden sm:table-cell">
+                                            約{Math.round(savings)}万円のコスト削減
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <p className="text-xs text-right text-slate-500 mt-2">※金額はシミュレーションに基づく概算であり、将来の物価変動や消費税等は考慮していません。</p>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const ProcessFlow = () => {
+            const steps = [
+                { title: "お問い合わせ・相談", desc: "まずはお電話またはフォームよりご連絡ください。建物の図面があればスムーズです。" },
+                { title: "現地調査", desc: "専門スタッフがお伺いし、配管ルートや水圧調査、設置場所の確認を行います。（無料）" },
+                { title: "水道局事前協議", desc: "管轄の水道局と、直結化が可能かどうか、口径計算などの事前協議を行います。" },
+                { title: "お見積り・ご契約", desc: "調査と協議結果に基づき、正確な工事費用をご提示します。" },
+                { title: "本工事・切替", desc: "断水時間を最小限に抑え、配管の接続工事とポンプ設置（必要な場合）を行います。" },
+                { title: "受水槽撤去", desc: "切り替え完了後、不要になった受水槽を解体・撤去し、整地します。" },
+            ];
+
+            return (
+                <section id="flow" className="py-20 bg-slate-50">
+                    <div className="container mx-auto px-4">
+                        <h2 className="text-3xl font-bold text-center text-slate-900 mb-16">
+                            工事完了までの流れ
+                        </h2>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {steps.map((step, index) => (
+                                <div key={index} className="relative group">
+                                    <div className="bg-white p-6 rounded-xl border border-slate-100 h-full hover:border-blue-200 transition-colors shadow-sm">
+                                        <div className="absolute -top-4 -left-4 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg shadow-md group-hover:scale-110 transition-transform">
+                                            {index + 1}
+                                        </div>
+                                        <h3 className="text-lg font-bold mt-2 mb-3 text-slate-900">
+                                            {step.title}
+                                        </h3>
+                                        <p className="text-slate-600 text-sm leading-relaxed">
+                                            {step.desc}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const FAQ = () => {
+            const [openIndex, setOpenIndex] = useState(0);
+            
+            const faqs = [
+                { q: "断水時間はどれくらいですか？", a: "建物の規模によりますが、配管の切り替え接続を行う数時間程度で済むケースがほとんどです。工事の大部分は断水なしで行います。" },
+                { q: "水圧が弱くなることはありませんか？", a: "事前に水道局と協議し、十分な水圧が確保できるか調査します。3階建て以上など水圧不足が懸念される場合は、増圧ポンプを設置することで快適な水圧を確保します。" },
+                { q: "すべての建物で直結化できますか？", a: "前面道路の水道本管の口径や水圧、建物の配管状況によっては直結化できない場合があります。まずは無料の現地調査をご利用ください。" },
+            ];
+
+            return (
+                <section className="py-20 bg-white">
+                    <div className="container mx-auto px-4 max-w-3xl">
+                        <h2 className="text-3xl font-bold text-center text-slate-900 mb-12">
+                            よくあるご質問
+                        </h2>
+                        <div className="space-y-4">
+                            {faqs.map((item, i) => (
+                                <div key={i} className="bg-slate-50 rounded-lg shadow-sm overflow-hidden border border-slate-100">
+                                    <button 
+                                        onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                                        className="w-full flex items-center justify-between p-5 text-left font-bold text-slate-800 focus:outline-none hover:bg-slate-100 transition-colors"
+                                    >
+                                        <span className="flex items-center gap-3">
+                                            <span className="text-blue-600">Q.</span>
+                                            {item.q}
+                                        </span>
+                                        {openIndex === i ? <ChevronUp className="h-5 w-5 text-slate-400" /> : <ChevronDown className="h-5 w-5 text-slate-400" />}
+                                    </button>
+                                    {openIndex === i && (
+                                        <div className="p-5 pt-0 text-slate-600 border-t border-slate-100 bg-slate-50">
+                                            <span className="font-bold text-blue-600 mr-2">A.</span>
+                                            {item.a}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Contact = () => (
+            <section id="contact" className="py-20 bg-blue-900 text-white">
+                <div className="container mx-auto px-4 text-center">
+                    <h2 className="text-3xl font-bold mb-6">
+                        無料現地調査・お見積り依頼
+                    </h2>
+                    <div className="text-blue-200 mb-10 max-w-2xl mx-auto">
+                        <p>
+                            受水槽のメンテナンスにお悩みの方、コスト削減をご検討の方はお気軽にご相談ください。しつこい営業は一切いたしません。
+                        </p>
+                    </div>
+                    
+                    <div className="flex flex-col md:flex-row justify-center items-center gap-6 max-w-4xl mx-auto">
+                        <a href="tel:052-853-2717" className="flex items-center justify-center gap-3 bg-white text-blue-900 w-full py-6 rounded-xl shadow-lg hover:bg-slate-100 transition-colors group">
+                            <Phone className="h-8 w-8 text-blue-600 group-hover:scale-110 transition-transform" />
+                            <div className="text-left">
+                                <div className="text-xs text-slate-500 font-bold">お電話でのご相談</div>
+                                <div className="text-3xl font-black tracking-wider">
+                                    052-853-2717
+                                </div>
+                            </div>
+                        </a>
+                        
+                        <a href="https://line.me/R/ti/p/@780zsckj" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-3 bg-[#06C755] text-white w-full py-6 rounded-xl shadow-lg hover:bg-[#05b64d] transition-colors group">
+                            <MessageCircle className="h-8 w-8 text-white group-hover:scale-110 transition-transform" />
+                            <div className="text-left">
+                                <div className="text-xs text-white/80 font-bold">LINEで気軽に</div>
+                                <div className="text-2xl font-bold">お問い合わせ</div>
+                            </div>
+                        </a>
+
+                        <a href="mailto:info@example.com" className="flex items-center justify-center gap-3 bg-blue-700 text-white w-full py-6 rounded-xl border border-blue-500 hover:bg-blue-600 transition-colors">
+                            <Mail className="h-8 w-8" />
+                            <div className="text-left">
+                                <div className="text-xs text-blue-200 font-bold">Webフォームから</div>
+                                <div className="text-2xl font-bold">お問い合わせ</div>
+                            </div>
+                        </a>
+                    </div>
+                    <p className="mt-6 text-sm text-blue-300">受付時間 9:00〜17:00（土日祝除く）</p>
+                </div>
+            </section>
+        );
+
+        const Footer = () => (
+            <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+                <div className="container mx-auto px-4">
+                    <div className="grid md:grid-cols-4 gap-8 mb-8">
+                        <div className="col-span-1 md:col-span-2">
+                            <div className="flex items-center gap-2 mb-4 text-white">
+                                <span className="text-lg font-bold">株式会社フジコー</span>
+                            </div>
+                            <p className="text-sm leading-relaxed mb-4">
+                                愛知県のビル・マンションの給水方式変更工事（直結給水切替工事）の施工実績多数。東海エリア全域対応、水道局指定の工事店としての確かな技術で、安心・安全な水をお届けします。
+                            </p>
+                        </div>
+                        <div>
+                            <h4 className="text-white font-bold mb-4">メニュー</h4>
+                            <ul className="space-y-2 text-sm">
+                                <li><a href="#" className="hover:text-white">トップページ</a></li>
+                                <li><a href="#calculator" className="hover:text-white">概算見積シミュレーション</a></li>
+                                <li><a href="#features" className="hover:text-white">メリット</a></li>
+                                <li><a href="#flow" className="hover:text-white">工事の流れ</a></li>
+                                <li><a href="#contact" className="hover:text-white">お問い合わせ</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 className="text-white font-bold mb-4">会社情報</h4>
+                            <ul className="space-y-2 text-sm">
+                                <li>会社概要</li>
+                                <li>プライバシーポリシー</li>
+                                <li>特定商取引法に基づく表記</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="text-center text-xs text-slate-600 pt-8 border-t border-slate-800">
+                        &copy; 2024 Fujiko Co., Ltd. All Rights Reserved.
+                    </div>
+                </div>
+            </footer>
+        );
+
+        // レンダリング実行
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
